@@ -25,9 +25,6 @@ EXCEPTION_STR = {
     EXCEPTION_SINGLE_STEP: "EXCEPTION_SINGLE_STEP",
 }
 
-MAX_INSTRUCTION_SIZE = 15
-PAGE_SIZE = 4096
-
 kernel32 = windll.kernel32
 
 def format_hex(iterable, prefix="", per_line=0):
