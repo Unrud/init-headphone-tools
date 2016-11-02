@@ -129,7 +129,7 @@ class Debugger():
 
     def run(self):
         if self._pid is None:
-            raise ValueError("Not attched to a process")
+            raise ValueError("Not attached to a process")
         debug_event = DEBUG_EVENT()
         while True:
             if not kernel32.WaitForDebugEvent(byref(debug_event), INFINITE):
