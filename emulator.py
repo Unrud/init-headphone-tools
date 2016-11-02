@@ -2,7 +2,7 @@
 
 # Emulates the Windows kernel driver on Linux.
 # Communicates with the debugger over TCP/IP.
-# Can log all Port-IO communication.
+# Can log all I/O port accesses.
 
 import argparse
 import logging
