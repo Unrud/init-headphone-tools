@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
-# A very simple reimplementation for the Windows kernel driver.
-# Communicates over TCP with Debugger or Players
-# Can log all Port-IO Communication
-# Replacement for emulator.py
+# Emulates the Windows kernel driver on Linux.
+# Communicates with the debugger over TCP/IP.
+# Can log all Port-IO communication.
 
 import argparse
 import logging

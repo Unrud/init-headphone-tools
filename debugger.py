@@ -5,9 +5,9 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(__file__), "debugger"))
 from debugger import *
 
-# Starts COMMAND and hooks the DeviceIoControl function
-# If IP is set the calls gets intercepted and forwarded to an Debugger.
-# Can write a log file with the arguemtns of DeviceIoControl calls.
+# Calls a function of a DLL and hooks the DeviceIoControl function.
+# If HOST is set it fowards the calls to the emulator over TCP/IP.
+# Can write a log file with the arguments of the DeviceIoControl calls.
 
 # The Python interpreter that is used to call the DLL.
 # It must be 32-bit. If Python 3 doesn't work, try Python 2.
