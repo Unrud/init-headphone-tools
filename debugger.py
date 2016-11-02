@@ -70,10 +70,18 @@ class HeadphoneDebugger(Debugger):
             self._create_file_return_address = from_little_endian(
                 self.read_process_memory(context.Esp, 4))
             self.set_breakpoint(self._create_file_return_address)
+            if self._host and file_name.lower() == b"\\\\.\\SvANSPDo".lower():
+                # Ret
+                context.Eax = 0xbada55
+                context.Eip = from_little_endian(self.read_process_memory(context.Esp, 4))
+                context.Esp += 4 + 28
+                self.set_thread_context(thread_id, context)
         elif exception_address == self._create_file_return_address:
             logging.info("Return from CreateFileA intercepted")
             self._create_file_return_address = None
             self.set_breakpoint(self._create_file_address)
+            context = self.get_thread_context(thread_id)
+            logging.debug("Return value: %x", context.Eax)
         elif exception_address == self._device_io_control_address:
             logging.info("DeviceIoControl intercepted")
             context = self.get_thread_context(thread_id)
@@ -120,7 +128,7 @@ class HeadphoneDebugger(Debugger):
             self._last_device_io_control_lpOutBuffer = lpOutBuffer
             self._last_device_io_control_nOutBufferSize = nOutBufferSize
 
-            if self._host:
+            if self._host and hDevice == 0xbada55:
                 logging.debug("Connecting to %s:%d", self._host, self._port)
                 data = {
                     "inBuffer": read_buffer,
@@ -165,6 +173,8 @@ class HeadphoneDebugger(Debugger):
                 write_buffer = b""
             logging.debug("outBuffer: %s", format_hex(write_buffer))
             logging.debug("bytesReturned: 0x%x", bytesReturned)
+            context = self.get_thread_context(thread_id)
+            logging.debug("Return value: %x", context.Eax)
             if self._log_file:
                 logging.debug("Writing output to log file")
                 self._log_file.write(";%x;%s\n" % (bytesReturned,
