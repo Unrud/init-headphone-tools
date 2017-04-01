@@ -270,7 +270,7 @@ class Debugger():
     def unset_breakpoint(self, address : int):
         logging.debug("Unset breakpoint at 0x%x", address)
         if address not in self._breakpoints:
-            raise ValueError("No breakpoint at 0x%x", address)
+            raise ValueError("No breakpoint at 0x%x" % address)
         self.write_process_memory(address, self._breakpoints[address])
         del self._breakpoints[address]
 
